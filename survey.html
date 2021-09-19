@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>კითხვარი</title>
+    <!-- Bootstrap CSS, adding visual styles-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div class="row">
+            <div class="col">
+                <img src="IMAGES/logo.png" alt="logo">
+            </div>
+            <div class="col text-end">
+                <br>
+                <p class="fs-4 mb-0"><span id="current-page">1</span>/4</p>
+            </div>
+        </div>
+        <hr id="header-separator" class="mt-0 mb-4">
+    </header>
+    <form id="survey-form" action="end_page.html"> <!--end_page.html can be replaced -->
+        <div id="page-1" class="page"><!--survey page 1. start-->
+            <div class="row">
+                <div class="col">
+                    <div class="mb-5">
+                        <label for="userName" class="form-label">სახელი*</label>
+                        <input type="text" placeholder="დავით" class="form-control" id="userName" name="username"
+                               required>
+                        <div class="invalid-feedback" id="invalid-feedback-userName">
+                            სახელი უნდა იყოს 3-255 მდე, ყველა სიმბოლო სახელში უნდა იყოს (ა-ჰ), (a-z) ან (A-Z)
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="userSurname" class="form-label">გვარი*</label>
+                        <input type="text" placeholder="ბაგრატიონი" class="form-control" id="userSurname" name="user-surname"
+                               required>
+                        <div class="invalid-feedback" id="invalid-feedback-userSurname">
+                            სახელი უნდა იყოს 3-255 მდე, ყველა სიმბოლო სახელში უნდა იყოს (ა-ჰ), (a-z) ან (A-Z)
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <label for="emailUser" class="form-label">მეილი*</label>
+                        <input type="email" placeholder="DBIV@redberry.com" class="form-control" id="emailUser"
+                               name="user-email" required pattern=".+@redberry\.ge$" aria-describedby="emailHelp">
+                        <div class="invalid-feedback" id="invalid-feedback-email">
+                            გთხოვთ შეიყვანეთ კომპანიის მეილი, უნდა მთავრდებოდეს @redberry.ge
+                        </div>
+                    </div>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <p>*-ით მონიშნული ველების შევსება სავალდებულოა</p>
+                </div>
+                <div class="col">
+                    <img src="IMAGES/scan_1.png" alt="user-picture"/>
+                </div>
+            </div>
+        </div><!--survey page 1. end-->
+
+        <div id="page-2" class="page d-none"><!--survey page 2. start-->
+            <div class="row">
+                <div class="col">
+                    <!--question 1 start-->
+                    <p><b> გადატანილი გაქვთ კოვიდ 19? </b></p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="covid-status" id="covid-status-1" value="yes"
+                               onclick="covidHadYes()">
+                        <label class="form-check-label" for="covid-status-1">
+                            კი
+                        </label>
+
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="covid-status" id="covid-status-2" value="no"
+                               onclick="covidHadYesClean()">
+                        <label class="form-check-label" for="covid-status-2">
+                            არა
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="covid-status" id="covid-status-3"
+                               value="I-have-no" onclick="covidHadYesClean()">
+                        <label class="form-check-label" for="covid-status-3">
+                            ახლა მაქვს
+                        </label>
+                    </div>
+                    <!--question 1 end-->
+                    <!--question 2 start-->
+                    <div class="d-none mt-3" id="antibodies-status-question">
+                        <p><b>შემთხვევით ანტისხეულების ტესტი ხომ არ გაქვს გაკეთებული?</b></p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="antibodies-test-status" id="question-2-1"
+                                   value="yes"
+                                   onclick="antibodiesStatusYes()">
+                            <label class="form-check-label" for="question-2-1">
+                                კი
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="antibodies-test-status" id="question-2-2"
+                                   value="no"
+                                   onclick="antibodiesStatusNo()">
+                            <label class="form-check-label" for="question-2-2">
+                                არა
+                            </label>
+                        </div>
+                    </div>
+                    <!--question 2 end-->
+                    <!--question 3 start-->
+                    <div class="d-none mt-5" id="date-test-yes">
+                        <p><b>თუ გახსოვთ, გთხოვ მიუთითოთ ტესტის მიახლოებითი რიცხვი
+                            და ანტისხეულების რაოდენონა</b></p>
+                        <input type="date" id="date-test-yes-date" class="mb-2 form-control" placeholder="რიცხვი"
+                               name="antibody-test-date">
+                        <div class="invalid-feedback" id="invalid-date-test-yes-date">
+                            გთხოვთ აირჩიოთ თარიღი
+                        </div>
+                        <br>
+                        <input type="number" id="date-test-yes-count" class="form-control"
+                               placeholder="ანტისხეულების რაოდენობა" name="antibody-test-count" min="0">
+                        <div class="invalid-feedback" id="invalid-date-test-yes-count">
+                            გთხოვთ აირჩიოთ რაოდენობა
+                        </div>
+                    </div>
+                    <!--question 3 end-->
+                    <!--question 4 start-->
+                    <div class="d-none mt-5" id="date-test-no">
+                        <label for="date-test-no-date"><b>მიუთითე მიახლოებითი პერიოდი (დღე/თვე/წელი) როდის გქონდა
+                            Covid-19*</b></label>
+                        <input type="date" id="date-test-no-date" class="form-control" placeholder="დდ/თთ/წწ" name="covid-date"
+                               pattern="dd/mm/yy">
+                        <div class="invalid-feedback" id="invalid-date-test-no-date">
+                            გთხოვთ აირჩიოთ თარიღი
+                        </div>
+                        <br>
+                    </div>
+                    <!--question 4 end-->
+                </div>
+                <div class="col">
+                    <img src="IMAGES/scan_2.png" alt="covid-case"/>
+                </div>
+            </div>
+        </div><!--survey page 2. end-->
+
+        <div id="page-3" class="page d-none"><!--survey page 3. start-->
+            <div class="row">
+                <div class="col">
+                    <!--question 1 start-->
+                    <p><b> უკვე აცრილი ხართ? </b></p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="vaccination-status" id="vaccination-1"
+                               value="yes" onclick="vaccinationStatusYes()">
+                        <label class="form-check-label" for="vaccination-1">
+                            კი
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="vaccination-status" id="vaccination-2"
+                               value="no"
+                               onclick="vaccinationStatusNo()">
+                        <label class="form-check-label" for="vaccination-2">
+                            არა
+                        </label>
+                    </div>
+                    <!--question 1 end-->
+                    <!--question 2 start-->
+                    <div class="d-none mt-3" id="vaccination-level">
+                        <p><b>აირჩიეთ რა ეტაპზე ხართ?</b></p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="vaccination-state" id="vaccination-level-1"
+                                   value="vaccinated once, registered on second"
+                                   onclick="vaccinationLevelClean()">
+                            <label class="form-check-label" for="vaccination-level-1">
+                                პირველი დოზა და დარეგისტრირებული ვარ მეორეზე
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="vaccination-state" id="vaccination-level-2"
+                                   value="fully vaccinated"
+                                   onclick="vaccinationLevelClean()">
+                            <label class="form-check-label" for="vaccination-level-2">
+                                სრულად აცრილი ვარ
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="vaccination-state" id="vaccination-level-3"
+                                   value="vaccinated once, not registered"
+                                   onclick="addVaccinationLink()">
+                            <label class="form-check-label" for="vaccination-level-3">
+                                პირველი დოზა და არ დავრეგისტრირებულვარ მეორეზე
+                            </label>
+                        </div>
+                    </div>
+                    <div class="d-none mt-5" id="vaccinated-once-not-registered">
+                        <p>რომ არ გადადოთ, გთხოვთ დარეგისტრირდეთ :. 👉</p>
+                        <a href="https://booking.moh.gov.ge/" target="_blank">აცრაზე რეგისტრაცია</a>
+                    </div>
+                    <!--question 2 end-->
+                    <!--question 3 start-->
+                    <div class="d-none mt-3" id="vaccination-additional-question">
+                        <p><b>რას ელოდებით?</b></p>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="not-vaccinated-additional-question"
+                                   id="additional-question-1" value="registered, waiting!"
+                                   onclick="additionalQuestionClean()">
+                            <label class="form-check-label" for="additional-question-1">
+                                დარეგისტრირებული ვარ ველოდები რიცხვს
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="not-vaccinated-additional-question"
+                                   id="additional-question-2" value="not planning"
+                                   onclick="showSearch()">
+                            <label class="form-check-label" for="additional-question-2">
+                                არ ვგეგმავ
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="not-vaccinated-additional-question"
+                                   id="additional-question-3" value="had covid, planning vaccination"
+                                   onclick="showVaccinationLink()">
+                            <label class="form-check-label" for="additional-question-3">
+                                გადატანილი მაქვს, ვგეგმავ აცრას
+                            </label>
+                        </div>
+                    </div>
+                    <div class="d-none mt-5" id="vaccinated-not-panning">
+                        <p>გთხოვთ გადახედოთ ინფორმაცია ვაქცინაციის სანდოობის შესახებ . 👉</p>
+                        <a href="https://www.google.com/search?q=Is+vaccination+safe%3F&client=ubuntu&hs=yG2&channel=fs&sxsr
+                    f=AOaemvJjnNyCGUBJgxaBBm688GnP1Sx4Hw%3A1631905595781&ei=O-dEYemTL6fqrgSFgp6YAg&oq=Is+vaccination+saf
+                    e%3F&gs_lcp=Cgdnd3Mtd2l6EAMyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCABDIFCAAQgAQyBQgAEIAEMgUIABCA
+                    BDIFCAAQgAQyBQgAEIAEOgcIIxCwAxAnOgkIABCwAxAHEB46CAgAEIAEELADOgcIIxCwAhAnOgYIABAHEB46BAgAEA1KBAhBGAFQ
+                    hY8BWK2-AWCUzwFoA3AAeACAAYYBiAG-BZIBAzAuNpgBAKABAcgBCsABAQ&sclient=gws-wiz&ved=0ahUKEwipnd-K2obzAhUn
+                    tYsKHQWBByMQ4dUDCA0&uact=5" target="_blank" >არის თუ არა ვაქცინაცია სანდო?</a>
+                        <p>რომ არ გადადოთ, გთხოვთ დარეგისტრირდეთ :</p>
+                        <a href="https://booking.moh.gov.ge/">აცრაზე რეგისტრაცია</a>
+                    </div>
+                    <div class="d-none mt-5" id="planning-vaccination">
+                        <p>ახალი პროტოკოლით კოვიდის გადატანიდან 1 თვის შემდეგ შეგიძლიათ ვაქცინის გაკეთება. 👉</p>
+                        <a href="https://booking.moh.gov.ge/" target="_blank" >აცრაზე რეგისტრაცია</a>
+                    </div>
+                    <!--question 3 end-->
+                </div>
+                <div class="col">
+                    <img src="IMAGES/scan_3.png" alt="vaccination"/>
+                </div>
+            </div>
+
+        </div><!--survey page 3. end-->
+
+        <div id="page-4" class="page d-none"><!--survey page 4. start-->
+            <div class="row">
+                <div class="col">
+                    <p>რედბერის მთავარი ღირებულება ჩვენი გუნდის თითოეული წევრია. გარემო, რომელსაც ჩვენი
+                        თანამშრომლები ქმნით, ბევრისთვის არის და ყოფილა წლების განმავლობაში მიზნებისთვის ერთად ბრძოლის
+                        მიზეზი,
+                        ბევრისთვის კი — ჩვენთან გადმოსვლის.</p>
+                    <br>
+                    <p>პანდემიის პერიოდში ერთმანეთსაც იშვიათად ვნახულობთ პირისპირ და ყოველდღიური კომუნიკაციაც
+                        გაიშვიათდა.</p>
+                    <br>
+                    <br>
+                    <!--question 1 start-->
+                    <p><b> რა სიხშირით შეიძლება გვქონდეს საერთო არაფორმალური ონლაინ შეხვედრები, სადაც ყველა სურვილისამებრ
+                        ჩაერთვება?* </b></p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="day-month-online" id="2-day-week"
+                               value="2 days a week">
+                        <label class="form-check-label" for="2-day-week">
+                            კვირაში ორჯერ
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="day-month-online" id="day-week"
+                               value="weekly">
+                        <label class="form-check-label" for="day-week">
+                            კვირაში ერთხელ
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="day-month-online" id="day-2-week"
+                               value="once every 2 weeks">
+                        <label class="form-check-label" for="day-2-week">
+                            2 კვირაში ერთხელ
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="day-month-online" id="day-month"
+                               value="monthly">
+                        <label class="form-check-label" for="day-month">
+                            თვეში ერთხელ
+                        </label>
+                    </div>
+                    <!--question 1 end-->
+                    <br>
+                    <br>
+                    <br>
+                    <!--question 2 start-->
+                    <p><b>კვირაში რამდენი დღე ისურვებდი ოფისიდან მუშაობას?*</b></p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="office-days-week" id="0-day" value="0">
+                        <label class="form-check-label" for="0-day">
+                            0
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="office-days-week" id="1-day" value="1">
+                        <label class="form-check-label" for="1-day">
+                            1
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="office-days-week" id="2-day" value="2">
+                        <label class="form-check-label" for="2-day">
+                            2
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="office-days-week" id="3-day" value="3">
+                        <label class="form-check-label" for="3-day">
+                            3
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="office-days-week" id="4-day" value="4">
+                        <label class="form-check-label" for="4-day">
+                            4
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="office-days-week" id="5-day" value="5">
+                        <label class="form-check-label" for="5-day">
+                            5
+                        </label>
+                    </div>
+                    <!--question 2 end-->
+                    <br>
+                    <br>
+                    <br>
+
+                    <label for="question-3"><b>რას ფიქრობ ფიზიკურ შეკრებებზე?</b></label> <br>
+                    <textarea id="question-3" name="office-meeting-question" rows="4" cols="50"> </textarea>
+                    <br>
+                    <br>
+                    <p></p>
+                    <label for="question-4"><b>რას ფიქრობ არსებულ გარემოზე: რა მოგწონს, რას დაამატებდი, რას
+                        შეცვლიდი?</b></label> <br>
+                    <textarea id="question-4" name="additional-question" rows="4" cols="50"> </textarea>
+                </div>
+                <div class="col">
+                    <img src="IMAGES/scan_4.png" alt="biking"/>
+                </div>
+            </div>
+            <br>
+            <br>
+            <div class="text-center ">
+                <button type="submit" class="btn btn-primary rounded-pill" id="submit-button">დასრულება</button>
+            </div>
+
+        </div><!--survey page 4. end-->
+
+    </form>
+
+    <nav aria-label="Page navigation"> <!-- navigation -->
+        <ul class="pagination justify-content-center">
+            <li class="page-item d-none" id="previousButton">
+                <a class="page-link" href="#" aria-label="Previous" onclick="onPrev()">
+                    <span aria-hidden="true"><</span>
+                </a>
+            </li>
+            <li class="page-item" id="nextButton">
+                <a class="page-link" href="#" aria-label="Next" onclick="onNext()">
+                    <span aria-hidden="true">></span>
+                </a>
+            </li>
+        </ul>
+    </nav> <!-- navigation -->
+
+</div>
+</body>
+</html>
